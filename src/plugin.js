@@ -16,6 +16,9 @@ export default (options = {}) => {
       plugin: pluginName,
       getRenderContext,
       excludeSsrComponents: options.excludeSsrComponents,
+      build: {
+        keepIndexHtml: true,
+      }
     }),
     {
       name: pluginName,
