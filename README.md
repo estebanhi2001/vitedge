@@ -1,4 +1,4 @@
-# Vitedge
+# Vitedge with KeepIndexHtml
 
 [Vite](https://github.com/vitejs/vite) _Edge Side Rendering_ (ESR) framework for Vue and React, or bring your own view library.
 
