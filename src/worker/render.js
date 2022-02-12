@@ -24,6 +24,31 @@ export async function handleViewRendering(event, { http2ServerPush, skipSSR }) {
 
   const initialState =
     (propsResponse.body && (await propsResponse.json())) || {}
+  
+  
+  try {
+    const { headers } = event.request
+    const contentType = headers.get("content-type") || ""
+    if (contentType.includes("application/json")) {
+      const request = event.request.clone()
+      initialState.body = JSON.stringify(await request.json())
+    }
+    else if (contentType.includes("application/text")) {
+      const request = event.request.clone()
+      initialState.body = await request.text()
+    }
+    else if (contentType.includes("text/html")) {
+      const request = event.request.clone()
+      initialState.body = await request.text()
+    }
+    else if (contentType.includes("application/x-www-form-urlencoded")) {
+      const request = event.request.clone()
+      let input = await request.text();
+      initialState.body = (require('qs')).parse(input);
+    }
+  } catch (error) {
+    console.log(error)
+  }
 
   const {
     html,
